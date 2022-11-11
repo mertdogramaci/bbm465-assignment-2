@@ -1,5 +1,7 @@
+import view.MessageBoxGUI;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        MessageBoxGUI messageBoxGUI = new MessageBoxGUI();
     }
 }
