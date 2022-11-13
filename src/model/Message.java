@@ -44,4 +44,14 @@ public class Message {
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message_id='" + message_id + '\'' +
+                ", content='" + content + '\'' +
+                ", password='" + password + '\'' +
+                ", receiver=" + receiver +
+                '}';
+    }
 }

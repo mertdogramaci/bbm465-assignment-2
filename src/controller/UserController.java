@@ -30,4 +30,18 @@ public class UserController {
     public List<User> getAllUsers() {
         return users;
     }
+
+    public User getUserByUsername(String username) {
+        if (users.size() == 0) {
+            return null;
+        }
+        int index = -1;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username)) {
+                index = i;
+                break;
+            }
+        }
+        return users.get(index);
+    }
 }

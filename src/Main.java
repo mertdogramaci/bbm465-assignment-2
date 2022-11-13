@@ -1,10 +1,9 @@
-import controller.UserController;
+import controller.MessageController;
 import view.MessageBoxGUI;
 
 public class Main {
     public static void main(String[] args) {
-        UserController userController = new UserController();
-        System.out.println(userController.getAllUsers());
+        MessageController messageController = new MessageController();
         MessageBoxGUI messageBoxGUI = new MessageBoxGUI();
     }
 }
