@@ -3,8 +3,6 @@ package view;
 import controller.MessageController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MessagePage {
     private final JFrame frame;
@@ -16,7 +14,7 @@ public class MessagePage {
         frame = new JFrame("Message");
         frame.setSize(500, 500);
 
-        JTextArea messageArea = new JTextArea(messageContent, 10, 100);
+        JTextArea messageArea = new JTextArea(messageContent, 100, 10); // satır sonuna sığmıyor
         messageArea.setBounds(50, 50, 400, 300);
         messageArea.setEditable(false);
         frame.add(messageArea);
@@ -25,12 +23,7 @@ public class MessagePage {
         viewButton.setBounds(150, 400, 200, 30);
         frame.add(viewButton);
 
-        viewButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onReturn();
-            }
-        });
+        viewButton.addActionListener(e -> onReturn());
 
         frame.setLayout(null);
         frame.setVisible(true);

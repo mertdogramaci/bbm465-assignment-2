@@ -4,8 +4,6 @@ import controller.MessageController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HomePage {
     private MessageController messageController;
@@ -26,12 +24,7 @@ public class HomePage {
         accessButton.setBounds(140, 130, 100, 30);
         frame.add(accessButton);
 
-        accessButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAccess();
-            }
-        });
+        accessButton.addActionListener(e -> onAccess());
 
         JButton leaveMessageButton = new JButton("Leave a message");
         leaveMessageButton.setBounds(120, 175, 140, 45);

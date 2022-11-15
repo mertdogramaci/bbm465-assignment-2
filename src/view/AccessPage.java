@@ -5,8 +5,6 @@ import model.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -82,12 +80,7 @@ public class AccessPage {
         frame.add(viewButton);
         viewButton.setEnabled(false);
 
-        viewButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onView();
-            }
-        });
+        viewButton.addActionListener(e -> onView());
 
         codenameInput.addKeyListener(new KeyListener() {
             @Override
@@ -124,12 +117,7 @@ public class AccessPage {
         homeButton.setBounds(150, 350, 100, 30);
         frame.add(homeButton);
 
-        homeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onHome();
-            }
-        });
+        homeButton.addActionListener(e -> onHome());
 
         frame.setLayout(null);
         frame.setVisible(true);
