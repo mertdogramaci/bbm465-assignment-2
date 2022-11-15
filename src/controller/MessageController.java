@@ -23,7 +23,6 @@ public class MessageController {
             while (line != null) {
                 String[] items = line.split("-");
                 Message message = new Message(items[0], items[1], items[2], userController.getUserByUsername(items[3]));
-                System.out.println(message);
                 messages.add(message);
                 line = userText.readLine();
             }
