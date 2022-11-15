@@ -40,4 +40,8 @@ public class MessageController {
         messages.add(message);
         return message;
     }
+
+    public List<Message> getAllMessages() {
+        return messages;
+    }
 }
