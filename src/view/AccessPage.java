@@ -12,12 +12,12 @@ import java.awt.event.KeyListener;
 import java.util.List;
 
 public class AccessPage {
-    JFrame frame;
-    JTextField codenameInput;
-    MessageController messageController;
-    JButton viewButton;
+    private final JFrame frame;
+    private final JTextField codenameInput;
+    private MessageController messageController;
+    private final JButton viewButton;
 
-    String messageContent;
+    private String messageContent;
 
     public AccessPage(MessageController messageController) {
         setMessageController(messageController);
@@ -99,10 +99,10 @@ public class AccessPage {
             public void keyPressed(KeyEvent e) {
                 viewButton.setEnabled(false);
                 List<Message> messages = getMessageController().getAllMessages();
-                for (int i = 0; i < messages.size(); i++) {
-                    if (codenameInput.getText().equals(messages.get(i).getMessage_id())) {
+                for (Message message : messages) {
+                    if (codenameInput.getText().equals(message.getMessage_id())) {
                         viewButton.setEnabled(true);
-                        messageContent = messages.get(i).getContent();
+                        messageContent = message.getContent();
                         break;
                     }
                 }
@@ -144,7 +144,7 @@ public class AccessPage {
 
     private void onView() {
         frame.setVisible(false);
-        MessagePage messagePage = new MessagePage(messageContent);
+        MessagePage messagePage = new MessagePage(messageContent, messageController);
     }
 
     public MessageController getMessageController() {
