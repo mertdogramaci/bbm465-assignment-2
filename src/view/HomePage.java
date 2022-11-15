@@ -20,6 +20,7 @@ public class HomePage {
         JButton accessButton = new JButton("Access");
         accessButton.setBounds(140, 130, 100, 30);
         frame.add(accessButton);
+
         accessButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
