@@ -28,6 +28,7 @@ public class MessageController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 

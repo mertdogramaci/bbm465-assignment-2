@@ -1,14 +1,19 @@
 package view;
 
+import controller.MessageController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePage {
-    private JFrame frame;
+    private MessageController messageController;
+    private final JFrame frame;
 
-    public HomePage() {
+    public HomePage(MessageController messageController) {
+        setMessageController(messageController);
+
         frame = new JFrame("Main Page");
         frame.setSize(400, 300);
 
@@ -40,6 +45,14 @@ public class HomePage {
 
     private void onAccess() {
         frame.setVisible(false);
-        AccessPage accessPage = new AccessPage();
+        AccessPage accessPage = new AccessPage(messageController);
+    }
+
+    public MessageController getMessageController() {
+        return messageController;
+    }
+
+    public void setMessageController(MessageController messageController) {
+        this.messageController = messageController;
     }
 }

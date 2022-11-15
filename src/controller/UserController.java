@@ -1,5 +1,6 @@
 package controller;
 
+import exception.UserNotFoundException;
 import model.User;
 
 import java.io.*;
@@ -42,6 +43,11 @@ public class UserController {
                 break;
             }
         }
+
+        if (index == -1) {
+            throw new UserNotFoundException("User could not found by username: " + username);
+        }
+
         return users.get(index);
     }
 }

@@ -1,14 +1,27 @@
 package view;
 
+import controller.MessageController;
+import model.Message;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.List;
 
 public class AccessPage {
     JFrame frame;
+    JTextField codenameInput;
+    MessageController messageController;
+    JButton viewButton;
 
-    public AccessPage() {
+    String messageContent;
+
+    public AccessPage(MessageController messageController) {
+        setMessageController(messageController);
+
         frame = new JFrame("Message View");
         frame.setSize(400, 500);
 
@@ -18,7 +31,7 @@ public class AccessPage {
         codename.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(codename);
 
-        JTextField codenameInput = new JTextField(20);
+        codenameInput = new JTextField(20);
         codenameInput.setBounds(150, 40, 200, 30);
         frame.add(codenameInput);
 
@@ -58,10 +71,48 @@ public class AccessPage {
         userPasswordInput.setBounds(150, 170, 200, 30);
         frame.add(userPasswordInput);
 
+        // Show password checkbox part
+        JCheckBox checkBox = new JCheckBox("Show Password");
+        checkBox.setBounds(160, 200, 200, 50);
+        frame.add(checkBox);
+
         // View Button Part
-        JButton viewButton = new JButton("VIEW");
+        viewButton = new JButton("VIEW");
         viewButton.setBounds(80, 300, 100, 30);
         frame.add(viewButton);
+        viewButton.setEnabled(false);
+
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onView();
+            }
+        });
+
+        codenameInput.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                viewButton.setEnabled(false);
+                List<Message> messages = getMessageController().getAllMessages();
+                for (int i = 0; i < messages.size(); i++) {
+                    if (codenameInput.getText().equals(messages.get(i).getMessage_id())) {
+                        viewButton.setEnabled(true);
+                        messageContent = messages.get(i).getContent();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         // Reset Button Part
         JButton resetButton = new JButton("RESET");
@@ -88,6 +139,19 @@ public class AccessPage {
 
     private void onHome() {
         frame.setVisible(false);
-        HomePage homePage = new HomePage();
+        HomePage homePage = new HomePage(messageController);
+    }
+
+    private void onView() {
+        frame.setVisible(false);
+        MessagePage messagePage = new MessagePage(messageContent);
+    }
+
+    public MessageController getMessageController() {
+        return messageController;
+    }
+
+    public void setMessageController(MessageController messageController) {
+        this.messageController = messageController;
     }
 }
