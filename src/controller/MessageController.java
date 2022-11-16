@@ -1,5 +1,7 @@
 package controller;
 
+import exception.MessageNotFoundException;
+import exception.UserNotFoundException;
 import model.Message;
 
 import java.io.BufferedReader;
@@ -43,5 +45,26 @@ public class MessageController {
 
     public List<Message> getAllMessages() {
         return messages;
+    }
+
+    public Message getMessageById(String id) {
+        if (messages.size() == 0) {
+            throw new MessageNotFoundException("Message could not found by id: " + id);
+        }
+
+        int index = -1;
+
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getMessage_id().equals(id)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            throw new MessageNotFoundException("Message could not found by id: " + id);
+        }
+
+        return messages.get(index);
     }
 }
