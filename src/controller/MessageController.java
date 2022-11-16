@@ -39,6 +39,7 @@ public class MessageController {
                 password,
                 userController.getUserByUsername(receiverUsername));
         messages.add(message);
+        System.out.println(message);
         return message;
     }
 
