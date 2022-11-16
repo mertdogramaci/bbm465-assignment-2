@@ -14,8 +14,10 @@ public class AccessPage {
     private final JTextField codenameInput;
     private MessageController messageController;
     private final JButton viewButton;
-
     private String messageContent;
+    private final JTextField passwordInput;
+    private final JTextField usernameInput;
+    private final JTextField userPasswordInput;
 
     public AccessPage(MessageController messageController) {
         setMessageController(messageController);
@@ -39,7 +41,7 @@ public class AccessPage {
         password.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(password);
 
-        JTextField passwordInput = new JTextField(20);
+        passwordInput = new JTextField(20);
         passwordInput.setBounds(150, 80, 200, 30);
         frame.add(passwordInput);
 
@@ -55,7 +57,7 @@ public class AccessPage {
         username.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(username);
 
-        JTextField usernameInput = new JTextField(20);
+        usernameInput = new JTextField(20);
         usernameInput.setBounds(150, 130, 200, 30);
         frame.add(usernameInput);
 
@@ -65,7 +67,7 @@ public class AccessPage {
         userPassword.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(userPassword);
 
-        JTextField userPasswordInput = new JTextField(20);
+        userPasswordInput = new JTextField(20);
         userPasswordInput.setBounds(150, 170, 200, 30);
         frame.add(userPasswordInput);
 
@@ -112,6 +114,8 @@ public class AccessPage {
         resetButton.setBounds(200, 300, 100, 30);
         frame.add(resetButton);
 
+        resetButton.addActionListener(e -> onReset());
+
         // Home Button Part
         JButton homeButton = new JButton("HOME");
         homeButton.setBounds(150, 350, 100, 30);
@@ -133,6 +137,13 @@ public class AccessPage {
     private void onView() {
         frame.setVisible(false);
         MessagePage messagePage = new MessagePage(messageContent, messageController);
+    }
+
+    private void onReset() {
+        codenameInput.setText("");
+        passwordInput.setText("");
+        usernameInput.setText("");
+        userPasswordInput.setText("");
     }
 
     public MessageController getMessageController() {
