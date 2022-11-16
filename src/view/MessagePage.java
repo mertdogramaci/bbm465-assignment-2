@@ -8,13 +8,15 @@ public class MessagePage {
     private final JFrame frame;
     private MessageController messageController;
 
-    public MessagePage(String messageContent, MessageController messageController) {
+    public MessagePage(String messageId, MessageController messageController) {
         setMessageController(messageController);
 
         frame = new JFrame("Message");
         frame.setSize(500, 500);
 
-        JTextArea messageArea = new JTextArea(messageContent, 100, 10); // satır sonuna sığmıyor
+        JTextArea messageArea = new JTextArea(messageController.getMessageById(messageId).getContent(),
+                100,
+                10); // satır sonuna sığmıyor
         messageArea.setBounds(50, 50, 400, 300);
         messageArea.setEditable(false);
         frame.add(messageArea);
