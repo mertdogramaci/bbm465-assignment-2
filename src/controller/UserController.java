@@ -14,6 +14,7 @@ public class UserController {
         users = new ArrayList<>();
 
         File userFile = new File("users.data");
+
         try {
             BufferedReader userText = new BufferedReader(new FileReader(userFile));
             String line = userText.readLine();
@@ -34,9 +35,11 @@ public class UserController {
 
     public User getUserByUsername(String username) {
         if (users.size() == 0) {
-            return null;
+            throw new UserNotFoundException("User could not found by username: " + username);
         }
+
         int index = -1;
+
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equals(username)) {
                 index = i;
