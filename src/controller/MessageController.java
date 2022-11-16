@@ -1,7 +1,6 @@
 package controller;
 
 import exception.MessageNotFoundException;
-import exception.UserNotFoundException;
 import model.Message;
 
 import java.io.BufferedReader;
@@ -66,5 +65,9 @@ public class MessageController {
         }
 
         return messages.get(index);
+    }
+
+    public UserController getUserController() {
+        return userController;
     }
 }

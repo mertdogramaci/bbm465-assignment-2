@@ -30,6 +30,8 @@ public class HomePage {
         leaveMessageButton.setBounds(120, 175, 140, 45);
         frame.add(leaveMessageButton);
 
+        leaveMessageButton.addActionListener(e -> onLeaveMessage());
+
         frame.setLayout(null);
         frame.setVisible(true);
 
@@ -39,6 +41,11 @@ public class HomePage {
     private void onAccess() {
         frame.setVisible(false);
         AccessPage accessPage = new AccessPage(messageController);
+    }
+
+    private void onLeaveMessage() {
+        frame.setVisible(false);
+        MessageRegister messageRegister = new MessageRegister(messageController);
     }
 
     public MessageController getMessageController() {
