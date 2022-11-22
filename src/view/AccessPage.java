@@ -18,17 +18,9 @@ public class AccessPage {
     private final JTextField passwordInput;
     private final JTextField usernameInput;
     private final JTextField userPasswordInput;
-    private boolean isCodename;
-    private boolean isPassword;
-    private boolean isUsername;
-    private boolean isUserPassword;
 
     public AccessPage(MessageController messageController) {
         setMessageController(messageController);
-        isCodename = false;
-        isPassword = false;
-        isUsername = false;
-        isUserPassword = false;
 
         frame = new JFrame("Message View");
         frame.setSize(400, 500);
@@ -88,123 +80,8 @@ public class AccessPage {
         viewButton = new JButton("VIEW");
         viewButton.setBounds(80, 300, 100, 30);
         frame.add(viewButton);
-        viewButton.setEnabled(false);
 
         viewButton.addActionListener(e -> onView());
-
-        codenameInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                viewButton.setEnabled(false);
-                List<Message> messages = getMessageController().getAllMessages();
-                for (Message message : messages) {
-                    if (codenameInput.getText().equals(message.getMessage_id())) {
-                        isCodename = true;
-                        if (isPassword && isUsername && isUserPassword) {
-                            viewButton.setEnabled(true);
-                            messageId = message.getMessage_id();
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        passwordInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                viewButton.setEnabled(false);
-                List<Message> messages = getMessageController().getAllMessages();
-                for (Message message : messages) {
-                    if (passwordInput.getText().equals(message.getPassword())) {
-                        isPassword = true;
-                        if (isCodename && isUsername && isUserPassword) {
-                            viewButton.setEnabled(true);
-                            messageId = message.getMessage_id();
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        usernameInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                viewButton.setEnabled(false);
-                List<Message> messages = getMessageController().getAllMessages();
-                for (Message message : messages) {
-                    if (usernameInput.getText().equals(message.getReceiver().getUsername())) {
-                        isUsername = true;
-                        if (isCodename && isPassword && isUserPassword) {
-                            viewButton.setEnabled(true);
-                            messageId = message.getMessage_id();
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        userPasswordInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                viewButton.setEnabled(false);
-                List<Message> messages = getMessageController().getAllMessages();
-                for (Message message : messages) {
-                    if (userPasswordInput.getText().equals(message.getReceiver().getPassword())) {
-                        isUserPassword = true;
-                        if (isCodename && isPassword && isUsername) {
-                            viewButton.setEnabled(true);
-                            messageId = message.getMessage_id();
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-
 
         // Reset Button Part
         JButton resetButton = new JButton("RESET");
@@ -231,9 +108,29 @@ public class AccessPage {
         HomePage homePage = new HomePage(messageController);
     }
 
+    private boolean check(){
+        List<Message> messages = getMessageController().getAllMessages();
+        for (Message message : messages) {
+            if(codenameInput.getText().equals(message.getMessage_id())&&
+               passwordInput.getText().equals(message.getPassword())&&
+               usernameInput.getText().equals(message.getReceiver().getUsername())&&
+               userPasswordInput.getText().equals(message.getReceiver().getPassword())){
+
+                messageId = message.getMessage_id();
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void onView() {
+        if(check()){
         frame.setVisible(false);
         MessagePage messagePage = new MessagePage(messageId, messageController);
+        }else{
+        JOptionPane.showMessageDialog(frame, "There is not such a message to view!","ERROR",JOptionPane.ERROR_MESSAGE);
+        onReset();
+        }
     }
 
     private void onReset() {
@@ -241,11 +138,6 @@ public class AccessPage {
         passwordInput.setText("");
         usernameInput.setText("");
         userPasswordInput.setText("");
-        isCodename = false;
-        isPassword = false;
-        isUsername = false;
-        isUserPassword = false;
-        viewButton.setEnabled(false);
     }
 
     public MessageController getMessageController() {
