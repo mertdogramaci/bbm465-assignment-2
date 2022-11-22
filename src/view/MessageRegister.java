@@ -1,6 +1,7 @@
 package view;
 
 import controller.MessageController;
+import model.Message;
 import model.User;
 
 import javax.swing.*;
@@ -13,18 +14,10 @@ public class MessageRegister {
     private MessageController messageController;
     private final JFrame frame;
     private final JComboBox<String> userMenu;
-    private boolean isPassword;
-    private boolean isConfirmPassword;
-    private boolean isCodename;
-    private boolean isMessage;
+    private final JTextField codenameInput;
     private String selectedUsername;
     public MessageRegister(MessageController messageController) {
         setMessageController(messageController);
-
-        isPassword = false;
-        isConfirmPassword = false;
-        isCodename = false;
-        isMessage = false;
 
         frame = new JFrame("Register Form");
         frame.setSize(800, 1000);
@@ -75,7 +68,7 @@ public class MessageRegister {
         codename.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(codename);
 
-        JTextField codenameInput = new JTextField(20);
+        codenameInput = new JTextField(20);
         codenameInput.setBounds(150, 120, 200, 30);
         frame.add(codenameInput);
 
@@ -93,12 +86,12 @@ public class MessageRegister {
         JButton createMessageButton = new JButton("Create Message");
         createMessageButton.setBounds(80, 550, 150, 30);
         frame.add(createMessageButton);
-        createMessageButton.setEnabled(false);
 
-        createMessageButton.addActionListener(e -> onCreateMessage(
+        createMessageButton.addActionListener(e -> onCreateMessage(//ef yi e ye cevir
                 codenameInput.getText(),
                 message.getText(),
                 passwordInput.getText(),
+                confirmPasswordInput.getText(),
                 selectedUsername
                 ));
 
@@ -108,105 +101,6 @@ public class MessageRegister {
         frame.add(homeButton);
 
         homeButton.addActionListener(e -> onHome());
-
-        passwordInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (passwordInput.getText().length() > 0) {
-                    isPassword = true;
-                    if (isConfirmPassword &&
-                            isCodename &&
-                            isMessage &&
-                            passwordInput.getText().equals(confirmPasswordInput.getText())) {
-                        createMessageButton.setEnabled(true);
-                    }
-                } else {
-                    createMessageButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        confirmPasswordInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (passwordInput.getText().equals(confirmPasswordInput.getText())) {
-                    isConfirmPassword = true;
-                    if (isPassword && isCodename && isMessage) {
-                        createMessageButton.setEnabled(true);
-                    }
-                } else {
-                    createMessageButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        codenameInput.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (codenameInput.getText().length() > 0) {
-                    isCodename = true;
-                    if (isPassword && isConfirmPassword && isMessage) {
-                        createMessageButton.setEnabled(true);
-                    }
-                } else {
-                    createMessageButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        message.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (message.getText().length() > 0) {
-                    isMessage = true;
-                    if (isPassword && isCodename && isConfirmPassword) {
-                        createMessageButton.setEnabled(true);
-                    }
-                } else {
-                    createMessageButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
 
         frame.setLayout(null);
         frame.setVisible(true);
@@ -219,9 +113,37 @@ public class MessageRegister {
         HomePage homePage = new HomePage(messageController);
     }
 
-    private void onCreateMessage(String messageId, String message, String password, String username) {
-        messageController.createMessage(messageId, message, password, username);
-        onHome();
+    private boolean check(String messageId){
+        List<Message> messages = getMessageController().getAllMessages();
+        for(Message message: messages){
+            if (message.getMessage_id().equals(messageId)) return false;
+        }
+        return true;
+    }
+
+    private void onCreateMessage(String messageId, String message, String password,String confirmPassword, String username) {
+        if(username == null){
+            JOptionPane.showMessageDialog(frame, "Please select username!","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(messageId.length()<1){
+            JOptionPane.showMessageDialog(frame, "Please enter valid Message codename!","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(password.length()<1){
+            JOptionPane.showMessageDialog(frame, "Please enter valid Password!","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!password.equals(confirmPassword)){
+            JOptionPane.showMessageDialog(frame, "Your Confirm Password doesn't match with the Password","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(message.length()<1){
+            JOptionPane.showMessageDialog(frame, "Please enter valid Message","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else if (check(messageId)){
+            messageController.createMessage(messageId, message, password, username);
+            onHome();
+        }else{
+            JOptionPane.showMessageDialog(frame, "This codename has been used! Change your codename!","ERROR",JOptionPane.ERROR_MESSAGE);
+            codenameInput.setText("");
+        }
     }
 
     public MessageController getMessageController() {
