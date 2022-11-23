@@ -121,7 +121,7 @@ public class AccessPage {
             if(codenameInput.getText().equals(message.getMessage_id())&&
                     Utils.convertToHashedVersion(passwordInput.getText()).equals(message.getPassword())&&
                     usernameInput.getText().equals(message.getReceiver().getUsername())&&
-                    userPasswordInput.getText().equals(message.getReceiver().getPassword())){// userın passwordu da hashleyecez bunu test ederken simdilik kaldir Utils.convertToHashedVersion(userPasswordInput.getText())
+                    Utils.convertToHashedVersion(userPasswordInput.getText()).equals(message.getReceiver().getPassword())){// userın passwordu da hashleyecez bunu test ederken simdilik kaldir Utils.convertToHashedVersion(userPasswordInput.getText())
 
                 messageId = message.getMessage_id();
                 return true;
