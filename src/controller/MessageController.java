@@ -16,8 +16,8 @@ public class MessageController {
     private final List<Message> messages;
     private final UserController userController;
 
-    public MessageController() {
-        userController = new UserController();
+    public MessageController(UserController userController) {
+        this.userController = userController;
         messages = new ArrayList<>();
         try{
             List<String> listToDecrypt = Utils.readInputFile("src/messages.data");
@@ -76,6 +76,7 @@ public class MessageController {
 
         return messages.get(index);
     }
+
 
     public UserController getUserController() {
         return userController;
