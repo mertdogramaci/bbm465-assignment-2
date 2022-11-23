@@ -3,7 +3,7 @@ package model;
 public class Message {
     private String message_id;
     private String content;
-    private String password;    // TODO: Should be String or not?
+    private String password;
     private User receiver;
 
     public Message(String message_id, String content, String password, User receiver) {
