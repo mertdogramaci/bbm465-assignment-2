@@ -1,12 +1,15 @@
 package controller;
 
 import exception.MessageNotFoundException;
+import jdk.jshell.execution.Util;
 import model.Message;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MessageController {
@@ -16,31 +19,37 @@ public class MessageController {
     public MessageController() {
         userController = new UserController();
         messages = new ArrayList<>();
-
-        File userFile = new File("messages.data");
-        try {
-            BufferedReader userText = new BufferedReader(new FileReader(userFile));
-            String line = userText.readLine();
-            while (line != null) {
-                String[] items = line.split("-");
+        try{
+            List<String> listToDecrypt = Utils.readInputFile("src/messages.data");
+            for(String encryptedMessage: listToDecrypt){
+                String decryptedMessage = Utils.decrypt(encryptedMessage);
+                String[] items = decryptedMessage.split("-");
                 Message message = new Message(items[0], items[1], items[2], userController.getUserByUsername(items[3]));
                 messages.add(message);
-                line = userText.readLine();
             }
-        } catch (Exception e) {
+
+        }catch(Exception e){
             e.printStackTrace();
             System.exit(0);
         }
+
     }
 
-    public Message createMessage(String message_id, String content, String password, String receiverUsername) {
-        Message message = new Message(message_id,
-                content,
-                password,
-                userController.getUserByUsername(receiverUsername));
-        messages.add(message);
-        System.out.println(message);
-        return message;
+    public Message createMessage(String message_id, String content, String password, String receiverUsername){
+        try{
+            Message message = new Message(message_id,
+                    content,
+                    Utils.convertToHashedVersion(password),// store the hashed version of the password
+                    userController.getUserByUsername(receiverUsername));
+            messages.add(message);
+            System.out.println(message);
+            Utils.writeOutputFile(Utils.encrypt(message.toWriteOnFile()),"src/messages.data");// write on the file the encrypted version of the message values.
+            return message;
+        }catch(Exception e){
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return null;
     }
 
     public List<Message> getAllMessages() {
