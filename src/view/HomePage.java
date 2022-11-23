@@ -21,16 +21,22 @@ public class HomePage {
         frame.add(label);
 
         JButton accessButton = new JButton("Access");
-        accessButton.setBounds(140, 130, 100, 30);
+        accessButton.setBounds(140, 100, 100, 30);
         frame.add(accessButton);
 
         accessButton.addActionListener(e -> onAccess());
 
         JButton leaveMessageButton = new JButton("Leave a message");
-        leaveMessageButton.setBounds(120, 175, 140, 45);
+        leaveMessageButton.setBounds(120, 145, 140, 45);
         frame.add(leaveMessageButton);
 
         leaveMessageButton.addActionListener(e -> onLeaveMessage());
+
+        JButton createUserButton = new JButton("Create an User");
+        createUserButton.setBounds(120, 205, 140, 45);
+        frame.add(createUserButton);
+
+        createUserButton.addActionListener(e -> onCreateUser());
 
         frame.setLayout(null);
         frame.setVisible(true);
@@ -41,6 +47,11 @@ public class HomePage {
     private void onAccess() {
         frame.setVisible(false);
         AccessPage accessPage = new AccessPage(messageController);
+    }
+
+    private void onCreateUser(){
+        frame.setVisible(false);
+        UserRegister userRegister = new UserRegister(messageController);
     }
 
     private void onLeaveMessage() {
