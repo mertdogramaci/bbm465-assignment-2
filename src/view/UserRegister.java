@@ -21,7 +21,7 @@ public class UserRegister {
         setUserController(messageController.getUserController());
         setMessageController(messageController);
 
-        frame = new JFrame("Message View");
+        frame = new JFrame("User Register");
         frame.setSize(400, 500);
 
         // Username Part
