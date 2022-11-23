@@ -1,12 +1,10 @@
 package view;
 
 import controller.MessageController;
-import controller.Utils;
+import utils.Utils;
 import model.Message;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package controller;
+package utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
