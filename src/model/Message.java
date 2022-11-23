@@ -44,7 +44,7 @@ public class Message {
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
-
+    
     @Override
     public String toString() {
         return "Message{" +
@@ -53,5 +53,8 @@ public class Message {
                 ", password='" + password + '\'' +
                 ", receiver=" + receiver +
                 '}';
+    }
+    public String toWriteOnFile(){
+        return message_id+"-"+content+"-"+password+"-"+receiver.getUsername();
     }
 }
