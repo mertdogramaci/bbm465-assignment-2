@@ -2,7 +2,7 @@ package model;
 
 public class User {
     private String username;
-    private String password;    // TODO: Should be String or not?
+    private String password;
 
     public User(String username, String password) {
         setUsername(username);
