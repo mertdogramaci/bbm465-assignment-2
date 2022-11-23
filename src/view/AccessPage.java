@@ -16,7 +16,7 @@ public class AccessPage {
     private String messageId;
     private final JTextField passwordInput;
     private final JTextField usernameInput;
-    private final JTextField userPasswordInput;
+    private final JPasswordField userPasswordInput;
 
     public AccessPage(MessageController messageController) {
         setMessageController(messageController);
@@ -66,14 +66,10 @@ public class AccessPage {
         userPassword.setFont(new Font("PMN Caecilia Sans Head Black", Font.BOLD, 12));
         frame.add(userPassword);
 
-        userPasswordInput = new JTextField(20);
+        userPasswordInput = new JPasswordField(20);
         userPasswordInput.setBounds(150, 170, 200, 30);
+        userPasswordInput.setEchoChar('*');
         frame.add(userPasswordInput);
-
-        // Show password checkbox part
-        JCheckBox checkBox = new JCheckBox("Show Password");
-        checkBox.setBounds(160, 200, 200, 50);
-        frame.add(checkBox);
 
         // View Button Part
         viewButton = new JButton("VIEW");
@@ -119,7 +115,7 @@ public class AccessPage {
             if(codenameInput.getText().equals(message.getMessage_id())&&
                     Utils.convertToHashedVersion(passwordInput.getText()).equals(message.getPassword())&&
                     usernameInput.getText().equals(message.getReceiver().getUsername())&&
-                    Utils.convertToHashedVersion(userPasswordInput.getText()).equals(message.getReceiver().getPassword())){// userın passwordu da hashleyecez bunu test ederken simdilik kaldir Utils.convertToHashedVersion(userPasswordInput.getText())
+                    Utils.convertToHashedVersion(String.valueOf(userPasswordInput.getPassword())).equals(message.getReceiver().getPassword())){// userın passwordu da hashleyecez bunu test ederken simdilik kaldir Utils.convertToHashedVersion(userPasswordInput.getText())
 
                 messageId = message.getMessage_id();
                 return true;
