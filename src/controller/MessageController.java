@@ -37,6 +37,7 @@ public class MessageController {
                     Utils.convertToHashedVersion(password),// store the hashed version of the password
                     userController.getUserByUsername(receiverUsername));
             messages.add(message);
+            System.out.println(message);
             Utils.writeOutputFile(Utils.encrypt(message.toWriteOnFile()),"src/messages.data");// write on the file the encrypted version of the message values.
             return message;
         }catch(Exception e){

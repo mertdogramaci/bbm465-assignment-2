@@ -55,6 +55,7 @@ public class UserController {
     public void createUser(String username,String userPassword){
         try{
             User user = new User(username, Utils.convertToHashedVersion(userPassword));// store the hashed version of the password)
+            System.out.println(user);
             users.add(user);
             Utils.writeOutputFile(Utils.encrypt(user.toWriteOnFile()),"src/users.data");// write on the file the encrypted version of the message values.
 
