@@ -1,6 +1,7 @@
 package controller;
 
 import exception.UserNotFoundException;
+import model.Message;
 import model.User;
 
 import java.io.*;
@@ -12,21 +13,34 @@ public class UserController {
 
     public UserController() {
         users = new ArrayList<>();
-
-        File userFile = new File("src/users.data");
-
-        try {
-            BufferedReader userText = new BufferedReader(new FileReader(userFile));
-            String line = userText.readLine();
-            while (line != null) {
-                String[] items = line.split("-");
-                User user = new User(items[0], items[1]);
+        try{
+            List<String> listToDecrypt = Utils.readInputFile("src/users.data");
+            for(String encryptedUser: listToDecrypt){
+                String decryptedUser = Utils.decrypt(encryptedUser);
+                String[] items = decryptedUser.split("-");
+                User user = new User(items[0],items[1]);
                 users.add(user);
-                line = userText.readLine();
             }
-        } catch (Exception e) {
+
+        }catch(Exception e){
             e.printStackTrace();
+            System.exit(0);
         }
+
+//        File userFile = new File("src/users.data");
+//
+//        try {
+//            BufferedReader userText = new BufferedReader(new FileReader(userFile));
+//            String line = userText.readLine();
+//            while (line != null) {
+//                String[] items = line.split("-");
+//                User user = new User(items[0], items[1]);
+//                users.add(user);
+//                line = userText.readLine();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public List<User> getAllUsers() {
@@ -52,5 +66,18 @@ public class UserController {
         }
 
         return users.get(index);
+    }
+
+    public void createUser(String username,String userPassword){
+        try{
+            User user = new User(username, Utils.convertToHashedVersion(userPassword));// store the hashed version of the password)
+            System.out.println(user);
+            users.add(user);
+            Utils.writeOutputFile(Utils.encrypt(user.toWriteOnFile()),"src/users.data");// write on the file the encrypted version of the message values.
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 }
