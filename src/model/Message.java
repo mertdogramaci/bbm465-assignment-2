@@ -44,7 +44,6 @@ public class Message {
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
-    
     @Override
     public String toString() {
         return "Message{" +
