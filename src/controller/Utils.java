@@ -1,7 +1,6 @@
 package controller;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
@@ -94,11 +93,4 @@ public class Utils {
         }
         return  listToDecrypt;
     }
-
-
-
-
-
-
-
 }
