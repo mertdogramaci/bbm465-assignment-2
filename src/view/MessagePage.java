@@ -14,9 +14,16 @@ public class MessagePage {
         frame = new JFrame("Message");
         frame.setSize(500, 500);
 
-        JTextArea messageArea = new JTextArea(messageController.getMessageById(messageId).getContent(),
-                100,
-                10); // satır sonuna sığmıyor
+        StringBuilder message = new StringBuilder("");
+        for (int i = 0; i < messageController.getMessageById(messageId).getContent().length(); i++) {
+            if (i % 60 == 0) {
+                message.append("\n").append(messageController.getMessageById(messageId).getContent().charAt(i));
+            } else {
+                message.append(messageController.getMessageById(messageId).getContent().charAt(i));
+            }
+        }
+
+        JTextArea messageArea = new JTextArea(String.valueOf(message));
         messageArea.setBounds(50, 50, 400, 300);
         messageArea.setEditable(false);
         frame.add(messageArea);
