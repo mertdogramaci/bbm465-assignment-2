@@ -13,7 +13,7 @@ public class UserController {
     public UserController() {
         users = new ArrayList<>();
 
-        File userFile = new File("users.data");
+        File userFile = new File("src/users.data");
 
         try {
             BufferedReader userText = new BufferedReader(new FileReader(userFile));
