@@ -1,12 +1,13 @@
 package view;
 
 import controller.MessageController;
+import controller.Utils;
 import model.Message;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class AccessPage {
@@ -81,7 +82,13 @@ public class AccessPage {
         viewButton.setBounds(80, 300, 100, 30);
         frame.add(viewButton);
 
-        viewButton.addActionListener(e -> onView());
+        viewButton.addActionListener(e -> {
+            try {
+                onView();
+            } catch (NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         // Reset Button Part
         JButton resetButton = new JButton("RESET");
@@ -108,13 +115,13 @@ public class AccessPage {
         HomePage homePage = new HomePage(messageController);
     }
 
-    private boolean check(){
+    private boolean check() throws NoSuchAlgorithmException {
         List<Message> messages = getMessageController().getAllMessages();
         for (Message message : messages) {
             if(codenameInput.getText().equals(message.getMessage_id())&&
-               passwordInput.getText().equals(message.getPassword())&&
-               usernameInput.getText().equals(message.getReceiver().getUsername())&&
-               userPasswordInput.getText().equals(message.getReceiver().getPassword())){
+                    Utils.convertToHashedVersion(passwordInput.getText()).equals(message.getPassword())&&
+                    usernameInput.getText().equals(message.getReceiver().getUsername())&&
+                    userPasswordInput.getText().equals(message.getReceiver().getPassword())){// userın passwordu da hashleyecez bunu test ederken simdilik kaldir Utils.convertToHashedVersion(userPasswordInput.getText())
 
                 messageId = message.getMessage_id();
                 return true;
@@ -123,13 +130,13 @@ public class AccessPage {
         return false;
     }
 
-    private void onView() {
+    private void onView() throws NoSuchAlgorithmException {
         if(check()){
-        frame.setVisible(false);
-        MessagePage messagePage = new MessagePage(messageId, messageController);
+            frame.setVisible(false);
+            MessagePage messagePage = new MessagePage(messageId, messageController);
         }else{
-        JOptionPane.showMessageDialog(frame, "There is not such a message to view!","ERROR",JOptionPane.ERROR_MESSAGE);
-        onReset();
+            JOptionPane.showMessageDialog(frame, "There is not such a message to view!","ERROR",JOptionPane.ERROR_MESSAGE);
+            onReset();
         }
     }
 
