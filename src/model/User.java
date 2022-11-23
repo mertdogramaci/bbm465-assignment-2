@@ -29,4 +29,7 @@ public class User {
     public String toString() {
         return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + '}';
     }
+    public String toWriteOnFile(){
+        return username+"-"+password;
+    }
 }
