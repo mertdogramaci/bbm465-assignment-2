@@ -90,7 +90,7 @@ public class MessageRegister {
 
         createMessageButton.addActionListener(e -> {
             try {
-                onCreateMessage(//ef yi e ye cevir
+                onCreateMessage(
                         codenameInput.getText(),
                         message.getText(),
                         passwordInput.getText(),
