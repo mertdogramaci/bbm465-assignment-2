@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class MessageRegister {
@@ -87,13 +88,19 @@ public class MessageRegister {
         createMessageButton.setBounds(80, 550, 150, 30);
         frame.add(createMessageButton);
 
-        createMessageButton.addActionListener(e -> onCreateMessage(//ef yi e ye cevir
-                codenameInput.getText(),
-                message.getText(),
-                passwordInput.getText(),
-                confirmPasswordInput.getText(),
-                selectedUsername
-                ));
+        createMessageButton.addActionListener(e -> {
+            try {
+                onCreateMessage(//ef yi e ye cevir
+                        codenameInput.getText(),
+                        message.getText(),
+                        passwordInput.getText(),
+                        confirmPasswordInput.getText(),
+                        selectedUsername
+                        );
+            } catch (NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         // Home Button Part
         JButton homeButton = new JButton("HOME");
@@ -121,7 +128,7 @@ public class MessageRegister {
         return true;
     }
 
-    private void onCreateMessage(String messageId, String message, String password,String confirmPassword, String username) {
+    private void onCreateMessage(String messageId, String message, String password,String confirmPassword, String username) throws NoSuchAlgorithmException {
         if(username == null){
             JOptionPane.showMessageDialog(frame, "Please select username!","ERROR",JOptionPane.ERROR_MESSAGE);
         }
